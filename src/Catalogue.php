@@ -11,6 +11,10 @@ class Catalogue
 
     public function productWithSku(Sku $sku)
     {
+        if (!isset($this->products[(string)$sku])) {
+            throw new InvalidArgumentException("Product with sku {$sku} is not in the catalogue.");
+        }
+
         return $this->products[(string)$sku];
     }
 }

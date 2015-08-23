@@ -2,6 +2,7 @@
 
 namespace spec;
 
+use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -29,5 +30,11 @@ class CatalogueSpec extends ObjectBehavior
 
         $this->productWithSku($sku1)->shouldReturn($product1);
         $this->productWithSku($sku2)->shouldReturn($product2);
+    }
+
+    function it_throws_an_exception_when_trying_to_retrieve_not_stored_product()
+    {
+        $this->shouldThrow(InvalidArgumentException::class)
+            ->duringProductWithSku(\Sku::fromString('RS1'));
     }
 }
