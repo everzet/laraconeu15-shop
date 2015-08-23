@@ -2,3 +2,11 @@ default:
     suites:
         domain:
             contexts: [ BasketContext ]
+        gui:
+            contexts: [ BasketGUIContext ]
+
+    extensions:
+        Behat\MinkExtension:
+            base_url: http://localhost:8000
+            sessions:
+                default: { goutte: ~ }
