@@ -14,8 +14,8 @@ class SkuSpec extends ObjectBehavior
         $this->beConstructedThrough('fromString', [self::SKU_STRING]);
     }
 
-    function it_is_initializable()
+    function it_can_be_converted_back_to_string()
     {
-        $this->shouldHaveType('Sku');
+        $this->__toString()->shouldReturn(self::SKU_STRING);
     }
 }

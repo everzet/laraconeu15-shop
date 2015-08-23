@@ -2,15 +2,15 @@
 
 class Catalogue
 {
-    private $product;
+    private $products = [];
 
     public function addProduct(Product $product)
     {
-        $this->product = $product;
+        $this->products[(string)$product->sku()] = $product;
     }
 
     public function productWithSku(Sku $sku)
     {
-        return $this->product;
+        return $this->products[(string)$sku];
     }
 }

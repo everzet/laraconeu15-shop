@@ -2,13 +2,18 @@
 
 class Sku
 {
+    private $string;
 
-    public static function fromString($argument1)
+    public static function fromString($string)
     {
         $sku = new Sku();
-
-        // TODO: write logic here
+        $sku->string = $string;
 
         return $sku;
+    }
+
+    public function __toString()
+    {
+        return $this->string;
     }
 }
