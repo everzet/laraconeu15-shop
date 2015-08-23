@@ -7,8 +7,12 @@ use Prophecy\Argument;
 
 class CatalogueSpec extends ObjectBehavior
 {
-    function it_accepts_product_to_add(\Product $aProduct)
+    function it_stores_individual_products(\Product $aProduct)
     {
+        $sku = \Sku::fromString('RS1');
+        $aProduct->sku()->willReturn($sku);
+
         $this->addProduct($aProduct);
+        $this->productWithSku($sku)->shouldReturn($aProduct);
     }
 }

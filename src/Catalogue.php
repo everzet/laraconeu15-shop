@@ -2,9 +2,15 @@
 
 class Catalogue
 {
+    private $product;
 
-    public function addProduct($argument1)
+    public function addProduct(Product $product)
     {
-        // TODO: write logic here
+        $this->product = $product;
+    }
+
+    public function productWithSku(Sku $sku)
+    {
+        return $this->product;
     }
 }

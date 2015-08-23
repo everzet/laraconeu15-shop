@@ -15,8 +15,13 @@ class ProductSpec extends ObjectBehavior
         ]);
     }
 
-    function it_is_initializable()
+    function it_exposes_its_sku()
     {
-        $this->shouldHaveType('Product');
+        $this->sku()->shouldBeLike(\Sku::fromString('RS1'));
+    }
+
+    function it_exposes_its_cost()
+    {
+        $this->cost()->shouldBeLike(\Cost::fromFloat(12.3));
     }
 }
