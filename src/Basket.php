@@ -4,9 +4,6 @@ class Basket
 {
     private $cost;
 
-    const VAT = 20;
-    const DELIVERY_COST = 3.0;
-
     public function __construct()
     {
         $this->cost = Cost::fromFloat(0.0);
@@ -33,15 +30,30 @@ class Basket
 
     private function costWithVat()
     {
-        return $this->cost->addPercent(self::VAT);
+        return $this->cost->addPercent(20);
     }
 
     private function deliveryCost()
     {
-        if ($this->cost->isMoreThan(Cost::fromFloat(10.0))) {
-            return Cost::fromFloat(2.0);
+        if ($this->cost->isMoreThan($this->expensiveBasketThreshold())) {
+            return $this->expensiveBasketDeliveryCost();
         }
 
-        return Cost::fromFloat(self::DELIVERY_COST);
+        return $this->cheapBasketDeliveryCost();
+    }
+
+    private function expensiveBasketThreshold()
+    {
+        return Cost::fromFloat(10.0);
+    }
+
+    private function expensiveBasketDeliveryCost()
+    {
+        return Cost::fromFloat(2.0);
+    }
+
+    private function cheapBasketDeliveryCost()
+    {
+        return Cost::fromFloat(3.0);
     }
 }
