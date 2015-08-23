@@ -38,6 +38,10 @@ class Basket
 
     private function deliveryCost()
     {
+        if ($this->cost->isMoreThan(Cost::fromFloat(10.0))) {
+            return Cost::fromFloat(2.0);
+        }
+
         return Cost::fromFloat(self::DELIVERY_COST);
     }
 }

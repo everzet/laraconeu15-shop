@@ -17,6 +17,11 @@ class Cost
         return $this->float === $aCost->float;
     }
 
+    public function isMoreThan(Cost $aCost)
+    {
+        return $this->float > $aCost->float;
+    }
+
     public function add(Cost $aCost)
     {
         return Cost::fromFloat($this->float + $aCost->float);

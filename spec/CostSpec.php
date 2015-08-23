@@ -19,6 +19,12 @@ class CostSpec extends ObjectBehavior
         $this->equals(Cost::fromFloat(20.4))->shouldReturn(false);
     }
 
+    function it_can_tell_if_it_is_more_than_provided_cost()
+    {
+        $this->shouldBeMoreThan(Cost::fromFloat(20.0));
+        $this->shouldNotBeMoreThan(Cost::fromFloat(21.0));
+    }
+
     function it_can_be_added_with_another_cost()
     {
         $this->add(Cost::fromFloat(0.8))->shouldBeLike(Cost::fromFloat(21.1));
