@@ -4,6 +4,9 @@ class Basket
 {
     private $cost;
 
+    const VAT = 20;
+    const DELIVERY_COST = 3.0;
+
     public function __construct()
     {
         $this->cost = Cost::fromFloat(0.0);
@@ -25,6 +28,16 @@ class Basket
             return $this->cost;
         }
 
-        return $this->cost->addPercent(20)->add(Cost::fromFloat(3.0));
+        return $this->costWithVat()->add($this->deliveryCost());
+    }
+
+    private function costWithVat()
+    {
+        return $this->cost->addPercent(self::VAT);
+    }
+
+    private function deliveryCost()
+    {
+        return Cost::fromFloat(self::DELIVERY_COST);
     }
 }
