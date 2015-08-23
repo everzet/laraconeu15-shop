@@ -4,6 +4,7 @@ default:
             contexts: [ BasketContext ]
         gui:
             contexts: [ BasketGUIContext ]
+            filters:  { tags: @critical }
 
     extensions:
         Behat\MinkExtension:
