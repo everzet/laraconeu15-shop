@@ -21,11 +21,29 @@ class BasketContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Given there is a product with SKU :arg1 and a cost of £:arg2 in the catalogue
+     * @Transform :aSku
      */
-    public function thereIsAProductWithSkuAndACostOfPsInTheCatalogue($arg1, $arg2)
+    public function transformStringToASku($string)
     {
-        throw new PendingException();
+        return Sku::fromString($string);
+    }
+
+    /**
+     * @Transform :aCost
+     */
+    public function transformStringToACost($string)
+    {
+        return Cost::fromFloat((float)$string);
+    }
+
+    /**
+     * @Given there is a product with SKU :aSku and a cost of £:aCost in the catalogue
+     */
+    public function thereIsProductInTheCatalogue(Sku $aSku, Cost $aCost)
+    {
+        $theCatalogue = new Catalogue();
+        $aProduct = Product::withSkuAndCost($aSku, $aCost);
+        $theCatalogue->addProduct($aProduct);
     }
 
     /**
