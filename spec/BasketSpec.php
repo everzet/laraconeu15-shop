@@ -7,10 +7,9 @@ use Prophecy\Argument;
 
 class BasketSpec extends ObjectBehavior
 {
-    function it_can_tell_if_its_total_cost_matches_given_one()
+    function it_costs_nothing_when_empty()
     {
         $this->isTotalCost(\Cost::fromFloat(0.0))->shouldReturn(true);
-        $this->isTotalCost(\Cost::fromFloat(10.0))->shouldReturn(false);
     }
 
     function it_properly_calculates_delivery_cost_for_cheap_products(

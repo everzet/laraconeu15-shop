@@ -23,4 +23,10 @@ class CostSpec extends ObjectBehavior
     {
         $this->add(Cost::fromFloat(0.8))->shouldBeLike(Cost::fromFloat(21.1));
     }
+
+    function it_can_be_added_with_percentage()
+    {
+        $this->beConstructedThrough('fromFloat', [5.0]);
+        $this->addPercent(20)->shouldBeLike(Cost::fromFloat(6.0));
+    }
 }

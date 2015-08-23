@@ -21,4 +21,9 @@ class Cost
     {
         return Cost::fromFloat($this->float + $aCost->float);
     }
+
+    public function addPercent($percent)
+    {
+        return Cost::fromFloat($this->float + ($this->float / 100 * $percent));
+    }
 }

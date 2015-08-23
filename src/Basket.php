@@ -16,6 +16,15 @@ class Basket
 
     public function isTotalCost(Cost $cost)
     {
-        return $this->cost->equals($cost);
+        return $this->totalCost()->equals($cost);
+    }
+
+    private function totalCost()
+    {
+        if ($this->cost->equals(Cost::fromFloat(0.0))) {
+            return $this->cost;
+        }
+
+        return $this->cost->addPercent(20)->add(Cost::fromFloat(3.0));
     }
 }
