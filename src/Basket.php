@@ -14,18 +14,18 @@ class Basket
         $this->cost = $this->cost->add($catalogue->productWithSku($sku)->cost());
     }
 
-    public function isTotalCost(Cost $cost)
-    {
-        return $this->totalCost()->equals($cost);
-    }
-
-    private function totalCost()
+    public function totalCost()
     {
         if ($this->cost->equals(Cost::fromFloat(0.0))) {
             return $this->cost;
         }
 
         return $this->costWithVat()->add($this->deliveryCost());
+    }
+
+    public function isTotalCost(Cost $cost)
+    {
+        return $this->totalCost()->equals($cost);
     }
 
     private function costWithVat()

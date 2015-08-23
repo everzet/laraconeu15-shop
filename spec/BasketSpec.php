@@ -32,4 +32,13 @@ class BasketSpec extends ObjectBehavior
         $this->addProductFromCatalogue(\Sku::fromString('RS2'), $catalogue);
         $this->isTotalCost(\Cost::fromFloat(20.0))->shouldReturn(true);
     }
+
+    function it_exposes_cost(\Catalogue $catalogue, \Product $aProduct)
+    {
+        $catalogue->productWithSku(\Sku::fromString('RS2'))->willReturn($aProduct);
+        $aProduct->cost()->willReturn(\Cost::fromFloat(15.0));
+
+        $this->addProductFromCatalogue(\Sku::fromString('RS2'), $catalogue);
+        $this->totalCost()->shouldBeLike(\Cost::fromFloat(20.0));
+    }
 }
