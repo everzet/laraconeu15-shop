@@ -15,4 +15,19 @@ class CatalogueSpec extends ObjectBehavior
         $this->addProduct($aProduct);
         $this->productWithSku($sku)->shouldReturn($aProduct);
     }
+
+    function it_can_store_multiple_products(\Product $product1, \Product $product2)
+    {
+        $sku1 = \Sku::fromString('RS1');
+        $product1->sku()->willReturn($sku1);
+
+        $sku2 = \Sku::fromString('RS2');
+        $product2->sku()->willReturn($sku2);
+
+        $this->addProduct($product1);
+        $this->addProduct($product2);
+
+        $this->productWithSku($sku1)->shouldReturn($product1);
+        $this->productWithSku($sku2)->shouldReturn($product2);
+    }
 }
