@@ -35,4 +35,9 @@ class CostSpec extends ObjectBehavior
         $this->beConstructedThrough('fromFloat', [5.0]);
         $this->addPercent(20)->shouldBeLike(Cost::fromFloat(6.0));
     }
+
+    function it_can_be_converted_to_string()
+    {
+        $this->__toString()->shouldReturn('20.3');
+    }
 }

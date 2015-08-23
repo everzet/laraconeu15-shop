@@ -31,4 +31,9 @@ class Cost
     {
         return Cost::fromFloat($this->float + ($this->float / 100 * $percent));
     }
+
+    public function __toString()
+    {
+        return (string)$this->float;
+    }
 }
