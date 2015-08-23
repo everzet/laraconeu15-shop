@@ -20,7 +20,15 @@ class BasketGUIContext extends RawMinkContext implements Context, SnippetAccepti
      */
     public function __construct()
     {
-        $this->catalogue = new Catalogue();
+        $this->catalogue = new FilesystemCatalogue();
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function clearCatalogue()
+    {
+        $this->catalogue->clear();
     }
 
     /**
