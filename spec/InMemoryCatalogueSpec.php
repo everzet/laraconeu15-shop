@@ -7,7 +7,7 @@ use IteratorAggregate;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class CatalogueSpec extends ObjectBehavior
+class InMemoryCatalogueSpec extends ObjectBehavior
 {
     function it_is_IteratorAggregate()
     {

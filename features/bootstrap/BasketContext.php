@@ -20,7 +20,7 @@ class BasketContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
-        $this->catalogue = new Catalogue();
+        $this->catalogue = new InMemoryCatalogue();
         $this->basket = new Basket();
     }
 
