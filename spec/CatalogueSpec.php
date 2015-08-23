@@ -3,11 +3,17 @@
 namespace spec;
 
 use InvalidArgumentException;
+use IteratorAggregate;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class CatalogueSpec extends ObjectBehavior
 {
+    function it_is_IteratorAggregate()
+    {
+        $this->shouldHaveType(IteratorAggregate::class);
+    }
+
     function it_stores_individual_products(\Product $aProduct)
     {
         $sku = \Sku::fromString('RS1');
@@ -30,6 +36,16 @@ class CatalogueSpec extends ObjectBehavior
 
         $this->productWithSku($sku1)->shouldReturn($product1);
         $this->productWithSku($sku2)->shouldReturn($product2);
+    }
+
+    function it_can_return_iterator_for_stored_products(\Product $aProduct)
+    {
+        $this->getIterator()->shouldHaveCount(0);
+
+        $aProduct->sku()->willReturn(\Sku::fromString('RS1'));
+        $this->addProduct($aProduct);
+
+        $this->getIterator()->shouldHaveCount(1);
     }
 
     function it_throws_an_exception_when_trying_to_retrieve_not_stored_product()

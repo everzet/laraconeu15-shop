@@ -1,6 +1,6 @@
 <?php
 
-class Catalogue
+class Catalogue implements IteratorAggregate
 {
     private $products = [];
 
@@ -16,5 +16,10 @@ class Catalogue
         }
 
         return $this->products[(string)$sku];
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator(array_values($this->products));
     }
 }
