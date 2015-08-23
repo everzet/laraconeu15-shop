@@ -11,4 +11,10 @@ class BasketSpec extends ObjectBehavior
     {
         $this->addProductFromCatalogue(\Sku::fromString('RS1'), $catalogue);
     }
+
+    function it_can_tell_if_its_total_cost_matches_given_one()
+    {
+        $this->isTotalCost(\Cost::fromFloat(0.0))->shouldReturn(true);
+        $this->isTotalCost(\Cost::fromFloat(10.0))->shouldReturn(false);
+    }
 }

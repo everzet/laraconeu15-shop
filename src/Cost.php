@@ -2,13 +2,18 @@
 
 class Cost
 {
+    private $float;
 
-    public static function fromFloat($argument1)
+    public static function fromFloat($float)
     {
         $cost = new Cost();
-
-        // TODO: write logic here
+        $cost->float = $float;
 
         return $cost;
+    }
+
+    public function equals(Cost $aCost)
+    {
+        return $this->float === $aCost->float;
     }
 }
