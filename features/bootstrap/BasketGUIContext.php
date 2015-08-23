@@ -1,6 +1,5 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\RawMinkContext;
@@ -10,6 +9,8 @@ use Behat\MinkExtension\Context\RawMinkContext;
  */
 class BasketGUIContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
+    private $catalogue;
+
     /**
      * Initializes context.
      *
@@ -19,29 +20,70 @@ class BasketGUIContext extends RawMinkContext implements Context, SnippetAccepti
      */
     public function __construct()
     {
+        $this->catalogue = new Catalogue();
     }
 
     /**
-     * @Given there is a product with SKU :arg1 and a cost of £:arg2 in the catalogue
+     * @Transform :aSku
      */
-    public function thereIsAProductWithSkuAndACostOfPsInTheCatalogue($arg1, $arg2)
+    public function transformStringToASku($string)
     {
-        throw new PendingException();
+        return Sku::fromString($string);
     }
 
     /**
-     * @When I add the product with SKU :arg1 from the catalogue to my basket
+     * @Transform :aCost
      */
-    public function iAddTheProductWithSkuFromTheCatalogueToMyBasket($arg1)
+    public function transformStringToACost($string)
     {
-        throw new PendingException();
+        return Cost::fromFloat((float)$string);
     }
 
     /**
-     * @Then the total cost of my basket should be £:arg1
+     * @Given there is a product with SKU :aSku and a cost of £:aCost in the catalogue
      */
-    public function theTotalCostOfMyBasketShouldBePs($arg1)
+    public function thereIsProductInTheCatalogue(Sku $aSku, Cost $aCost)
     {
-        throw new PendingException();
+        $aProduct = Product::withSkuAndCost($aSku, $aCost);
+        $this->catalogue->addProduct($aProduct);
+    }
+
+    /**
+     * @When I add the product with SKU :sku from the catalogue to my basket
+     */
+    public function iAddTheProductWithSkuFromTheCatalogueToMyBasket($sku)
+    {
+        $this->visitCatalogue();
+        $this->addProductToBasket($sku);
+    }
+
+    /**
+     * @Then the total cost of my basket should be £:cost
+     */
+    public function theTotalCostOfMyBasketShouldBePs($cost)
+    {
+        $this->assertVisibleBasketCost($cost);
+    }
+
+    private function visitCatalogue()
+    {
+        $this->visitPath('/catalogue');
+    }
+
+    private function addProductToBasket($sku)
+    {
+        $this->assertProductIsOnPage($sku);
+        $el = $this->getSession()->getPage()->find('css', ".product:contains('$sku')");
+        $el->clickLink('Add to basket');
+    }
+
+    private function assertVisibleBasketCost($cost)
+    {
+        $this->assertSession()->pageTextContains("Total cost of basket: £$cost");
+    }
+
+    private function assertProductIsOnPage($sku)
+    {
+        $this->assertSession()->elementExists('css', ".product:contains('$sku')");
     }
 }
