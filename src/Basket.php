@@ -11,7 +11,7 @@ class Basket
 
     public function addProductFromCatalogue(Sku $sku, Catalogue $catalogue)
     {
-        // TODO: write logic here
+        $this->cost = $this->cost->add($catalogue->productWithSku($sku)->cost());
     }
 
     public function isTotalCost(Cost $cost)
